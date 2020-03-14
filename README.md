@@ -34,4 +34,8 @@ python manage.py runserver --settings=api.settings.local<br/>
 *settings in manage.py actually for docker run so setting should be given by hand when running locally<br/>
 ## To Run Unit Tests:
  python manage.py test <"name_of_app"> --settings=api.settings.local<br/>
-
+## Postman:
+### Import Link:
+https://www.getpostman.com/collections/3887c2d7ce1105af18b2
+### Documentation Link:
+https://documenter.getpostman.com/view/8736278/SzS2x86H?version=latest
