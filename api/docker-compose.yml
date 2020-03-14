@@ -1,0 +1,30 @@
+version: '3.7'
+
+services:
+  web:
+    build: .
+    restart: always
+    image: registry.docker.dev/game_sim
+    command: >
+      bash -c "python /app/manage.py makemigrations && python /app/manage.py migrate && python /app/manage.py runserver 0.0.0.0:8000"
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app/
+
+
+  db:
+    image: postgres
+    restart: always
+    container_name: "postgres_game"
+    ports:
+      - "54322:5432"
+    environment:
+      POSTGRES_PASSWORD: game_sim
+      POSTGRES_USER: game
+      POSTGRES_DB: gamedb
+    volumes:
+      - ./dbdata:/var/lib/postgresql/data
+
+volumes:
+  dbdata:
