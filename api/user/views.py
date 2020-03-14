@@ -6,8 +6,9 @@ from rest_framework.generics import RetrieveAPIView, CreateAPIView, ListAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from user.createmany import UserCreateManyAPIView
 from user.models import MyUser
-from user.serializers import UserCreateSerializer, UserLoginSerializer, UserListSerializer
+from user.serializers import UserCreateSerializer, UserLoginSerializer, UserListSerializer, UserCreateManySerializer
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
 from rest_framework.exceptions import ValidationError
 from django.db.models import Q
@@ -58,6 +59,11 @@ class UserCreateAPIView(CreateAPIView):
         usr_obj = MyUser.objects.filter(id=serializer.data['id']).first()
         serializer = UserListSerializer(usr_obj)
         return Response(serializer.data, status=200)
+
+
+class UserRegisterManyAPIView(UserCreateManyAPIView):
+    serializer_class = UserCreateManySerializer
+    queryset = MyUser.objects.all()
 
 
 class UserLoginAPIView(APIView):

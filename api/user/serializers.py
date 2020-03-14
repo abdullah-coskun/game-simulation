@@ -19,6 +19,35 @@ class UserCreateSerializer(ModelSerializer):
         }
 
 
+class UserCreateManySerializer(ModelSerializer):
+    class Meta:
+        model = MyUser
+        fields = '__all__'
+        extra_kwargs = {
+            "password":
+                {"required": False},
+            "username":
+                {"required": False}
+        }
+
+    def create(self, validated_data):
+        if MyUser.objects.filter(display_name=validated_data['display_name']).count() > 0:
+            raise ValidationError({"email": ["This user has already been registered"]})
+        username = validated_data.get('display_name')
+        display_name = validated_data.get('display_name')
+        points = validated_data.get('points', 0)
+        country = validated_data.get('country')
+
+        user_obj = MyUser(
+            username=username,
+            display_name=display_name,
+            points=points,
+            country=country,
+        )
+        user_obj.save()
+        return user_obj
+
+
 class UserListSerializer(ModelSerializer):
     class Meta:
         model = MyUser
@@ -50,7 +79,7 @@ class UserLoginSerializer(ModelSerializer):
     def validate(self, data):
         user_obj = MyUser.objects.filter(username=data.get("username")).first()
         if not user_obj:
-            raise ValidationError({'detail':'Incorrect Credentials'})
+            raise ValidationError({'detail': 'Incorrect Credentials'})
         payload = jwt_payload_handler(user_obj)
         token = jwt_encode_handler(payload)
         data["token"] = token
