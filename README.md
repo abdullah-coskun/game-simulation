@@ -39,3 +39,10 @@ python manage.py runserver --settings=api.settings.local<br/>
 https://www.getpostman.com/collections/3887c2d7ce1105af18b2
 ### Documentation Link:
 https://documenter.getpostman.com/view/8736278/SzS2x86H?version=latest
+
+
+
+### Features to add:
+https://stackoverflow.com/questions/18930234/django-modifying-the-request-object
+
+https://stackoverflow.com/questions/18803112/django-doesnt-call-model-clean-method
